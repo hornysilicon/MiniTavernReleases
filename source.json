@@ -1,0 +1,29 @@
+{
+    "name": "MiniTavern",
+    "subtitle": "A SillyTavern inspired AI chat client.",
+    "description": "MiniTavern - Talk with your favourite AI characters on the go.",
+    "iconURL": "https://placehold.co/1024x1024/4185A9/FFFFFF?text=MiniTavern",
+    "headerURL": "https://placehold.co/1792x368/4185A9/FFFFFF?text=MiniTavern",
+    "website": "https://github.com/hornysillicon/MiniTavernReleases",
+    "tintColor": "#4185A9",
+    "apps": [
+        {
+            "name": "MiniTavern",
+            "bundleIdentifier": "hornysillicon.MiniTavern",
+            "developerName": "hornysillicon",
+            "subtitle": "Talk with your favourite AI characters on the go",
+            "localizedDescription": "Chat with AI characters from your favourite sources. Supports customizable system prompts and multiple AI providers.",
+            "iconURL": "https://placehold.co/1024x1024/4185A9/FFFFFF?text=MiniTavern",
+            "tintColor": "#4185A9",
+            "versions": [
+                {
+                    "version": "",
+                    "date": "2026-05-19T21:00:51-08:00",
+                    "size": 440837,
+                    "downloadURL": "https://github.com/hornysilicon/MiniTavernReleases/raw/refs/heads/main/MiniTavern.ipa/MiniTavern.ipa",
+                    "localizedDescription": "Build "
+                }
+            ]
+        }
+    ]
+}
