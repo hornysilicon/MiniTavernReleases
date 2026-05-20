@@ -29,6 +29,13 @@
                     "size": 440837,
                     "downloadURL": "https://raw.githubusercontent.com/hornysilicon/MiniTavernReleases/refs/heads/main/MiniTavern.ipa",
                     "localizedDescription": "Build "
+                },
+                {
+                    "version": "1.0",
+                    "date": "2026-05-19T21:00:51-08:00",
+                    "size": 440837,
+                    "downloadURL": "https://raw.githubusercontent.com/hornysilicon/MiniTavernReleases/refs/heads/main/MiniTavern.ipa",
+                    "localizedDescription": "Build 72"
                 }
             ]
         }
