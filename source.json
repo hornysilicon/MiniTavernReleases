@@ -17,6 +17,13 @@
             "tintColor": "#4185A9",
             "versions": [
                 {
+                    "version": "2.1",
+                    "date": "2026-05-21T20:15:05+0000",
+                    "size": 452923,
+                    "downloadURL": "https://github.com/hornysilicon/MiniTavernReleases/releases/download/v2.1/MiniTavern-2.1.ipa",
+                    "localizedDescription": "2.1 released on 2026-05-21T20:15:05+0000"
+                },
+                {
                     "version": "2.0.0",
                     "date": "2026-05-21T11:22:35-08:00",
                     "size": 453072,
