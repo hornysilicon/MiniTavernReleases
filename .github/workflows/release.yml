@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'MiniTavern.ipa'
+      - 'VERSION'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_OUTPUT
+
+      - name: Get file size
+        id: filesize
+        run: echo "size=$(stat -f%z MiniTavern.ipa)" >> $GITHUB_OUTPUT
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date -u +"%Y-%m-%dT%H:%M:%S%z")" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          release_name: MiniTavern v${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
+
+      - name: Upload IPA to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./MiniTavern.ipa
+          asset_name: MiniTavern-${{ steps.version.outputs.version }}.ipa
+          asset_content_type: application/octet-stream
+
+      - name: Update source.json
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          DATE: ${{ steps.date.outputs.date }}
+          SIZE: ${{ steps.filesize.outputs.size }}
+          DOWNLOAD_URL: https://github.com/${{ github.repository }}/releases/download/v${{ steps.version.outputs.version }}/MiniTavern-${{ steps.version.outputs.version }}.ipa
+        run: |
+          python3 << 'EOF'
+          import json
+          import os
+
+          version = os.environ['VERSION']
+          date = os.environ['DATE']
+          size = int(os.environ['SIZE'])
+          download_url = os.environ['DOWNLOAD_URL']
+
+          with open('source.json', 'r') as f:
+              data = json.load(f)
+
+          new_entry = {
+              "version": version,
+              "date": date,
+              "size": size,
+              "downloadURL": download_url,
+              "localizedDescription": f"{version} released on {date}"
+          }
+
+          data['apps'][0]['versions'].insert(0, new_entry)
+
+          with open('source.json', 'w') as f:
+              json.dump(data, f, indent=4)
+          EOF
+
+      - name: Commit source.json
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add source.json
+          git commit -m "Update source.json for v${{ steps.version.outputs.version }}"
+          git push
